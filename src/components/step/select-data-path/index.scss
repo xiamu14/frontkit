@@ -1,0 +1,13 @@
+.select-data-path-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .btn-select-file {
+    margin-bottom: 20px;
+  }
+  .file-path {
+    font-size: 16px;
+    color: #434343;
+  }
+}

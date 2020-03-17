@@ -10,22 +10,23 @@ import {
   Route,
 } from "react-router-dom";
 import './App.scss';
-import SideMenu from './components/menu';
+import SideMenu from './components/side-menu';
 import Setup from './components/setup';
 import BuilderList from './components/builder-list';
+import Logo from './assets/logo.svg';
 const { Header, Sider, Content } = Layout;
 
 export default function App() {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  // const selectedKey = window.location.pathname === '/' ? '1' : "2";
-
   return (
     <Router>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className="logo" />
+          <div className="logo" >
+            <img src={Logo} alt='logo' />
+          </div>
           <SideMenu />
         </Sider>
         <Layout className="site-layout">

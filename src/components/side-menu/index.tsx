@@ -16,8 +16,10 @@ export default function SideMenu() {
         history.push(path);
     }
 
+    const selectedKey = window.location.pathname === '/' ? '1' : "2";
+
     return (
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={[selectedKey]}>
             <Menu.Item key="1" onClick={() => handleSwitch('/')}>
                 <AppstoreOutlined />
                 <span >常用生成器</span>

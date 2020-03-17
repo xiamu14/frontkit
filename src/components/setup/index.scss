@@ -1,0 +1,14 @@
+.step-box {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .step-container {
+        margin-top: 100px;
+    }
+}
+.btn-next-step {
+    position: absolute;
+    bottom: 100px;
+}
