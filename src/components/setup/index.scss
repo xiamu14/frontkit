@@ -8,7 +8,13 @@
         margin-top: 100px;
     }
 }
-.btn-next-step {
+.btn-group {
     position: absolute;
     bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .btn-prev {
+        margin-right: 10px;
+    }
 }

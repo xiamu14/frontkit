@@ -9,6 +9,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import 'antd/dist/antd.css';
 import './App.scss';
 import SideMenu from './components/side-menu';
 import Setup from './components/setup';

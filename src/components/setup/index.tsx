@@ -1,27 +1,70 @@
 import React, { useState } from 'react';
-import { Steps, Button } from 'antd';
-import SelectDataPath from '../step/select-data-path/index';
+import { Steps, Button, notification } from 'antd';
+import { useHistory } from 'react-router-dom';
+import SelectDataPath from '../step/select-data-path';
+import SelectParse from '../step/select-parse';
+import SelectTemplate from '../step/select-template';
+import SelectTargetPath from '../step/select-target-path';
 import './index.scss';
 
 export default function Setup() {
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
+    const history = useHistory();
 
     const handleNext = () => {
         if (current < 3) {
             setCurrent(current + 1);
+        } else {
+            notification.open({
+                message: '配置生成器完成',
+                description:
+                    '请跳转到【常用生成器】页面使用生成器自动产出代码！',
+                onClick: () => {
+                    // console.log('Notification Clicked!');
+                    history.push('/');
+                    notification.destroy();
+                },
+            });
         }
     }
 
+    const handlePrev = () => {
+        setCurrent(current - 1);
+    }
+
+    const handleSelectDataPath = (dir: string) => {
+        // TODO: 暂存数据源路径
+        console.log('数据源路径', dir);
+    }
+
+    const handleSelectTargetPath = (dir: string) => {
+        console.log('生成目录', dir);
+    }
+
     const renderStep = () => {
-        let html = null;
+        let html: React.ReactElement | null = null;
         switch (current) {
             case 0:
                 html = (
-                    <SelectDataPath />
+                    <SelectDataPath onSelected={handleSelectDataPath} />
                 )
                 break;
-
+            case 1:
+                html = (
+                    <SelectParse />
+                );
+                break;
+            case 2:
+                html = (
+                    <SelectTemplate />
+                )
+                break;
+            case 3:
+                html = (
+                    <SelectTargetPath onSelected={handleSelectTargetPath} />
+                )
+                break;
             default:
                 break;
         }
@@ -43,7 +86,11 @@ export default function Setup() {
                     }
                 </div>
 
-                <Button className='btn-next-step' type="primary" shape='round' onClick={handleNext} >{current === 3 ? "保存" : "下一步"}</Button>
+                <div className='btn-group'>
+
+                    {current > 0 ? <Button className='btn-prev' type='primary' shape='round' onClick={handlePrev}>上一步</Button> : null}
+                    <Button className='btn-next' type="primary" shape='round' onClick={handleNext} >{current === 3 ? "保存" : "下一步"}</Button>
+                </div>
             </div>
         </div>
     )

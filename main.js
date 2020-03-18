@@ -4,6 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require("path");
 const isDev = require("electron-is-dev");
+const event = require("./src/event");
 
 let mainWindow;
 
@@ -27,6 +28,9 @@ function createWindow() {
     mainWindow.webContents.openDevTools();
   }
   mainWindow.on("closed", () => (mainWindow = null));
+
+  event();
+
 }
 
 app.on("ready", createWindow);
