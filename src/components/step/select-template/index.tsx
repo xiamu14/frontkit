@@ -4,14 +4,14 @@ import { SchemaForm, SchemaField, SchemaMarkupField as Field } from '@formily/an
 import { ArrayList } from '@formily/react-shared-components'
 import { toArr, FormPath } from '@formily/shared'
 import { Input } from '@formily/antd-components'
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 import './index.scss';
 
 const ArrayComponents = {
     CircleButton: (props) => <Button {...props} />,
     TextButton: (props) => <Button {...props} />,
-    AdditionIcon: () => <PlusCircleOutlined style={{ fontSize: "20px" }} />,
+    AdditionIcon: () => <PlusOutlined style={{ fontSize: "20px" }} />,
     RemoveIcon: () => <DeleteOutlined />
 }
 
