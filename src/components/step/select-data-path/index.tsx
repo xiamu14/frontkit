@@ -15,7 +15,8 @@ export default function SelectDataPath(props: Props) {
 
     const handleSelectDirectory = () => {
         ipcRenderer.send('open-directory-dialog', ['openDirectory']);
-        setPath('');
+        ipcRenderer.send('import-dynamic');
+        // setPath('');
     }
 
     useEffect(() => {
