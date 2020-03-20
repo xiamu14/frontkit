@@ -1,20 +1,36 @@
+.setup-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .step-box {
-    height: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 30px 0 10px;
+
+  .step-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    .step-container {
-        margin-top: 100px;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    &::-webkit-scrollbar {
+      width: 0;
     }
+  }
 }
 .btn-group {
-    position: absolute;
-    bottom: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .btn-prev {
-        margin-right: 10px;
-    }
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .btn-prev {
+    margin-right: 10px;
+  }
 }

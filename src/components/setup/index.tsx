@@ -85,12 +85,10 @@ export default function Setup() {
                         renderStep()
                     }
                 </div>
-
-                <div className='btn-group'>
-
-                    {current > 0 ? <Button className='btn-prev' type='primary' shape='round' onClick={handlePrev}>上一步</Button> : null}
-                    <Button className='btn-next' type="primary" shape='round' onClick={handleNext} >{current === 3 ? "保存" : "下一步"}</Button>
-                </div>
+            </div>
+            <div className='btn-group'>
+                {current > 0 ? <Button className='btn-prev' type='primary' shape='round' onClick={handlePrev}>上一步</Button> : null}
+                <Button className='btn-next' type="primary" shape='round' onClick={handleNext} >{current === 3 ? "保存" : "下一步"}</Button>
             </div>
         </div>
     )

@@ -90,7 +90,7 @@ export default function SelectTemplate() {
             }}
         >
             <Field
-                title="模板配置"
+                title=""
                 name="templateList"
                 type="array"
                 default={[{}]}
