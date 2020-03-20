@@ -27,6 +27,9 @@ function createWindow() {
     //BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
     mainWindow.webContents.openDevTools();
   }
+  if (process.platform === 'darwin') {
+    app.dock.setIcon(path.join(__dirname, './src/assets/icon_200x200@2x.icon.png'));
+    }
   mainWindow.on("closed", () => (mainWindow = null));
 
   event();
