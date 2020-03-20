@@ -10,11 +10,16 @@ import './index.scss';
 export default function Setup() {
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
+    const [isClickNext, setIsClickNext] = useState(false);
     const history = useHistory();
 
     const handleNext = () => {
         if (current < 3) {
-            setCurrent(current + 1);
+            if (current === 1) {
+                setIsClickNext(true);
+            } else {
+                setCurrent(current + 1);
+            }
         } else {
             notification.open({
                 message: '配置生成器完成',
@@ -52,7 +57,7 @@ export default function Setup() {
                 break;
             case 1:
                 html = (
-                    <SelectParse />
+                    <SelectParse isClickNext={isClickNext} />
                 );
                 break;
             case 2:

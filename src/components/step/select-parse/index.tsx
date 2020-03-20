@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     SchemaForm,
     SchemaMarkupField as Field,
@@ -9,19 +9,32 @@ import { Input, Select } from '@formily/antd-components';
 
 const { onFieldValueChange$ } = FormEffectHooks
 
+const actions = createFormActions();
+
 const oneToManyEffects = () => {
-    const { setFieldState } = createFormActions()
     onFieldValueChange$('type').subscribe(({ value }) => {
-        setFieldState('*(filterVolume)', state => {
+        actions.setFieldState('*(filterVolume)', state => {
             state.visible = value === 'picture'
         })
-        setFieldState('parseFile', state => {
+        actions.setFieldState('parseFile', state => {
             state.visible = value === 'custom'
         })
     })
 }
 
-export default function SelectParse() {
+interface Props {
+    isClickNext: boolean
+}
+
+export default function SelectParse(props: Props) {
+    const { isClickNext } = props;
+    useEffect(() => {
+        if (isClickNext) {
+            actions.submit((values) => {
+                console.log('这里吗', values);
+            })
+        }
+    }, [isClickNext])
 
     return (
         <div className="select-parse-box">
@@ -30,6 +43,7 @@ export default function SelectParse() {
                 onSubmit={values => {
                     console.log(values)
                 }}
+                actions={actions}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 effects={() => {
