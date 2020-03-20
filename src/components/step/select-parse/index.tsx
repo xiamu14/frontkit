@@ -24,17 +24,18 @@ const oneToManyEffects = () => {
 
 interface Props {
     isClickNext: boolean
+    onInput: (status: boolean, fieldData?: Record<string, any>) => void;
 }
 
 export default function SelectParse(props: Props) {
-    const { isClickNext } = props;
+    const { isClickNext, onInput } = props;
     useEffect(() => {
         if (isClickNext) {
             actions.submit((values) => {
-                console.log('这里吗', values);
+                onInput(true, values);
             })
         }
-    }, [isClickNext])
+    }, [isClickNext, onInput])
 
     return (
         <div className="select-parse-box">

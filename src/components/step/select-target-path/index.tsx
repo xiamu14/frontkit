@@ -15,7 +15,6 @@ export default function SelectTargetPath(props: Props) {
 
     const handleSelectDirectory = () => {
         ipcRenderer.send('open-directory-dialog', ['openDirectory']);
-        setPath('');
     }
 
     useEffect(() => {
@@ -26,6 +25,7 @@ export default function SelectTargetPath(props: Props) {
                 props.onSelected(directory[0]);
             }
         })
+        return () => ipcRenderer.removeAllListeners('selected-directory')
     }, [props])
 
     return (

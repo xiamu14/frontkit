@@ -1,9 +1,11 @@
-import React from 'react'
-import { Button } from 'antd'
-import { SchemaForm, SchemaField, SchemaMarkupField as Field } from '@formily/antd'
+import React, { useEffect } from 'react'
+import { Button, message } from 'antd'
+
+import { SchemaForm, SchemaField, SchemaMarkupField as Field, createFormActions, } from '@formily/antd'
 import { ArrayList } from '@formily/react-shared-components'
 import { toArr, FormPath } from '@formily/shared'
 import { Input } from '@formily/antd-components'
+import SelectFile from '../../form-field/select-file';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 import './index.scss';
@@ -81,13 +83,41 @@ const ArrayCustom = (props) => {
 
 ArrayCustom.isFieldComponent = true
 
-export default function SelectTemplate() {
+const actions = createFormActions();
+
+interface Props {
+    isClickNext: boolean
+    onInput: (status: boolean, fieldData?: Record<string, any>) => void;
+}
+
+export default function SelectTemplate(props: Props) {
+    const { isClickNext, onInput } = props;
+
+    useEffect(() => {
+        type Values = { templateList: Record<string, string>[] };
+        if (isClickNext) {
+            actions.submit((values) => {
+                const { templateList } = values as Values;
+                const list = templateList.filter(item => Object.keys(item).length > 0);
+                if (list.length > 0) {
+                    onInput(true, values);
+                } else {
+                    onInput(false);
+                    message.error('请添加模板文件！');
+
+                }
+            })
+        }
+    }, [isClickNext, onInput])
+
     return (
         <SchemaForm
             components={{
                 ArrayCustom,
                 Input,
+                SelectFile
             }}
+            actions={actions}
         >
             <Field
                 title=""
@@ -95,9 +125,11 @@ export default function SelectTemplate() {
                 type="array"
                 default={[{}]}
                 x-component="ArrayCustom"
+                required={true}
             >
                 <Field type="object">
-                    <Field name="templateFilePath" x-component="Input" title="模板文件" />
+                    <Field name="templateFilePath" x-component="SelectFile" title="模板文件" />
+
                     <Field name="targetFileName" x-component="Input" title="生成文件" />
                 </Field>
             </Field>

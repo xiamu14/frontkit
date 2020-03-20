@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Steps, Button, notification } from 'antd';
 import { useHistory } from 'react-router-dom';
 import SelectDataPath from '../step/select-data-path';
@@ -10,16 +10,19 @@ import './index.scss';
 export default function Setup() {
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
+    const [data, setData] = useState<Record<string, any>[]>([]);
     const [isClickNext, setIsClickNext] = useState(false);
     const history = useHistory();
 
+    useEffect(() => {
+        if (!isClickNext && data.length === current + 1) {
+            setCurrent(current + 1);
+        }
+    }, [isClickNext, data, current])
+
     const handleNext = () => {
         if (current < 3) {
-            if (current === 1) {
-                setIsClickNext(true);
-            } else {
-                setCurrent(current + 1);
-            }
+            setIsClickNext(true);
         } else {
             notification.open({
                 message: '配置生成器完成',
@@ -38,13 +41,16 @@ export default function Setup() {
         setCurrent(current - 1);
     }
 
-    const handleSelectDataPath = (dir: string) => {
-        // TODO: 暂存数据源路径
-        console.log('数据源路径', dir);
+    const handleInput = (status: boolean, fieldData?: Record<string, any>) => {
+        if (status && fieldData) {
+            // setCurrent(current + 1);
+            setData([...data, ...[fieldData]])
+        }
+        setIsClickNext(false);
     }
 
     const handleSelectTargetPath = (dir: string) => {
-        console.log('生成目录', dir);
+        setData([...data, ...[{targetPath: dir}]])
     }
 
     const renderStep = () => {
@@ -52,17 +58,17 @@ export default function Setup() {
         switch (current) {
             case 0:
                 html = (
-                    <SelectDataPath onSelected={handleSelectDataPath} />
+                    <SelectDataPath isClickNext={isClickNext} onInput={handleInput} />
                 )
                 break;
             case 1:
                 html = (
-                    <SelectParse isClickNext={isClickNext} />
+                    <SelectParse isClickNext={isClickNext} onInput={handleInput} />
                 );
                 break;
             case 2:
                 html = (
-                    <SelectTemplate />
+                    <SelectTemplate isClickNext={isClickNext} onInput={handleInput} />
                 )
                 break;
             case 3:

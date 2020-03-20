@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { FolderOutlined } from "@ant-design/icons";
 import './index.scss';
 
@@ -7,27 +7,40 @@ import './index.scss';
 const { ipcRenderer } = window;
 
 interface Props {
-    onSelected: (dir: string) => void;
+    isClickNext: boolean
+    onInput: (status: boolean, fieldData?: Record<string, any>) => void;
 }
 
 export default function SelectDataPath(props: Props) {
+    const { isClickNext, onInput } = props;
+
     const [path, setPath] = useState<string>();
 
     const handleSelectDirectory = () => {
         ipcRenderer.send('open-directory-dialog', ['openDirectory']);
-        ipcRenderer.send('import-dynamic');
-        // setPath('');
     }
 
     useEffect(() => {
+        if (isClickNext) {
+            if (path) {
+                onInput(true, { dataPath: path })
+            } else {
+                onInput(false);
+                message.error('请选择数据源目录！');
+            }
+        }
+    }, [isClickNext, onInput, path])
+
+    useEffect(() => {
         ipcRenderer.on('selected-directory', (_, directory: string[]) => {
-            console.log('检查下啊', directory);
+            // console.log('检查下啊', directory);
             // TODO: 这里还缺少了错误处理
             if (directory && directory.length > 0) {
                 setPath(directory[0]);
-                props.onSelected(directory[0]);
+                // props.onSelected(directory[0]);
             }
         })
+        return () => ipcRenderer.removeAllListeners('selected-directory')
     }, [props])
 
     return (
