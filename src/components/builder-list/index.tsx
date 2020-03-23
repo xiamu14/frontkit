@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Card } from 'antd';
-
+import { useHistory } from "react-router-dom";
+import uniqueId from 'lodash.uniqueid';
+import './index.scss';
 // @ts-ignore
 const { ipcRenderer } = window;
 
 export default function BuilderList() {
 
+    const history = useHistory();
     const [builderList, setBuilderList] = useState<Record<string, any>[]>();
 
     useEffect(() => {
@@ -18,8 +21,10 @@ export default function BuilderList() {
         return () => ipcRenderer.removeAllListeners('read-builder');
     }, [])
 
-    const handleClick = () => {
-        console.log('运行此生成器');
+    const handleClick = (builder: any) => {
+        const id = uniqueId('builder_');
+        history.push(`/building?id=${id}`);
+        localStorage.setItem(id, JSON.stringify(builder));
     }
 
     return (
@@ -28,7 +33,7 @@ export default function BuilderList() {
                 {
                     builderList ? builderList.map((builder, index) => {
                         return (
-                            <Col span={8} key={String(index)} onClick={() => handleClick()}>
+                            <Col span={8} key={String(index)} onClick={() => handleClick(builder)}>
                                 <Card title={builder.info.name} hoverable={true}>{builder.info.desc}</Card>
                             </Col>
                         )

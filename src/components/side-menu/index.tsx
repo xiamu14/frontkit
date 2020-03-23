@@ -19,18 +19,17 @@ export default function SideMenu() {
         history.push(path);
     }
 
-
     useEffect(() => {
-        setSelectedKey(location.pathname === '/' ? '1' : "2");
+        setSelectedKey(location.pathname);
     }, [location])
 
     return (
         <Menu theme="dark" mode="inline" selectedKeys={[selectedKey]}>
-            <Menu.Item key="1" onClick={() => handleSwitch('/')}>
+            <Menu.Item key="/" onClick={() => handleSwitch('/')}>
                 <AppstoreOutlined />
                 <span >常用生成器</span>
             </Menu.Item>
-            <Menu.Item key="2" onClick={() => handleSwitch('/setup')}>
+            <Menu.Item key="/setup" onClick={() => handleSwitch('/setup')}>
                 <BuildOutlined />
                 <span >配置生成器</span>
             </Menu.Item>

@@ -1,5 +1,6 @@
 const { ipcMain, dialog } = require("electron");
 const db  = require('../helper/lowdb');
+const Builder = require('../builder');
 
 module.exports = function event() {
   // 选择目录/文件
@@ -24,8 +25,14 @@ module.exports = function event() {
   });
 
   // 读取生成器配置文件
-  ipcMain.on("read-builder", (event, arg) => {
+  ipcMain.on("read-builder", (event) => {
       const builder = db.get('builderConf').value();
       event.reply("read-builder", builder);
+  });
+
+  // 启动生成器
+  ipcMain.on("build", (event, arg) => {
+    const builder = new Builder(arg);
+    builder.init(arg);
   });
 };

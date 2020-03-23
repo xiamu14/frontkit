@@ -15,7 +15,7 @@ export default function Setup() {
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
     const [data, setData] = useState<Record<string, any>>({});
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const [isClickNext, setIsClickNext] = useState(false);
     const history = useHistory();
 
