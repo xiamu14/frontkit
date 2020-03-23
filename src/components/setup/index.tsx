@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Steps, Button, notification } from 'antd';
+import { Steps, Button, notification, Modal } from 'antd';
 import { useHistory } from 'react-router-dom';
 import SelectDataPath from '../step/select-data-path';
 import SelectParse from '../step/select-parse';
 import SelectTemplate from '../step/select-template';
 import SelectTargetPath from '../step/select-target-path';
+import InfoForm from './components/info-form';
 import './index.scss';
 
 // @ts-ignore
@@ -13,34 +14,39 @@ const { ipcRenderer } = window;
 export default function Setup() {
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
-    const [data, setData] = useState<Record<string, any>[]>([]);
+    const [data, setData] = useState<Record<string, any>>({});
+    const [visible, setVisible] = useState(true);
     const [isClickNext, setIsClickNext] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
-        if (!isClickNext && data.length === current + 1) {
+        if (!isClickNext && Object.keys(data).length === current + 1) {
             setCurrent(current + 1);
         }
         return () => ipcRenderer.removeAllListeners('save-builder');
     }, [isClickNext, data, current])
 
+    const handleOk = (res: Record<'info', any>) => {
+        setVisible(false);
+        ipcRenderer.send('save-builder', { ...data, ...res });
+
+        // NOTE: 这里还需要处理错误信息
+        notification.open({
+            message: '配置生成器完成',
+            description:
+                '请跳转到【常用生成器】页面使用生成器自动产出代码！',
+            onClick: () => {
+                history.push('/');
+                notification.destroy();
+            },
+        });
+    }
+
     const handleNext = () => {
         if (current < 3) {
             setIsClickNext(true);
         } else {
-            ipcRenderer.send('save-builder', data);
-
-            notification.open({
-                message: '配置生成器完成',
-                description:
-                    '请跳转到【常用生成器】页面使用生成器自动产出代码！',
-                onClick: () => {
-                    // console.log('Notification Clicked!');
-
-                    history.push('/');
-                    notification.destroy();
-                },
-            });
+            setVisible(true);
         }
     }
 
@@ -51,13 +57,13 @@ export default function Setup() {
     const handleInput = (status: boolean, fieldData?: Record<string, any>) => {
         if (status && fieldData) {
             // setCurrent(current + 1);
-            setData([...data, ...[fieldData]])
+            setData({ ...data, ...fieldData })
         }
         setIsClickNext(false);
     }
 
-    const handleSelectTargetPath = (dir: string) => {
-        setData([...data, ...[{ targetPath: dir }]])
+    const handleSelectTargetPath = (dir: Record<'targetPath', string>) => {
+        setData({ ...data, ...dir })
     }
 
     const renderStep = () => {
@@ -108,6 +114,14 @@ export default function Setup() {
                 {current > 0 ? <Button className='btn-prev' type='primary' shape='round' onClick={handlePrev}>上一步</Button> : null}
                 <Button className='btn-next' type="primary" shape='round' onClick={handleNext} >{current === 3 ? "保存" : "下一步"}</Button>
             </div>
+            <Modal
+                title="生成器基本信息"
+                visible={visible}
+                onCancel={() => setVisible(false)}
+                footer={false}
+            >
+                <InfoForm onOk={handleOk} />
+            </Modal>
         </div>
     )
 }

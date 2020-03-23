@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Card } from 'antd';
 
 // @ts-ignore
@@ -6,28 +6,35 @@ const { ipcRenderer } = window;
 
 export default function BuilderList() {
 
+    const [builderList, setBuilderList] = useState<Record<string, any>[]>();
+
     useEffect(() => {
         ipcRenderer.send('read-builder');
 
         ipcRenderer.on('read-builder', (_, builderList) => {
-            console.log('查看所有的生成器配置', builderList);
+            setBuilderList(builderList);
         });
 
         return () => ipcRenderer.removeAllListeners('read-builder');
     }, [])
 
+    const handleClick = () => {
+        console.log('运行此生成器');
+    }
+
     return (
         <div className="site-card-wrapper">
             <Row gutter={16}>
-                <Col span={8}>
-                    <Card title="图标组件生成器" >Card content</Card>
-                </Col>
-                <Col span={8}>
-                    <Card title="路由组件生成器" >Card content</Card>
-                </Col>
-                <Col span={8}>
-                    <Card title="Remax - H5 组件生成器" >Card content</Card>
-                </Col>
+                {
+                    builderList ? builderList.map((builder, index) => {
+                        return (
+                            <Col span={8} key={String(index)} onClick={() => handleClick()}>
+                                <Card title={builder.info.name} hoverable={true}>{builder.info.desc}</Card>
+                            </Col>
+                        )
+                    }) : ""
+                }
+
             </Row>
         </div>
     );
