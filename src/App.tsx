@@ -34,7 +34,7 @@ export default function App() {
           <Header className="site-layout-background" style={{ padding: "0" }}>
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
-              onClick: () => { setCollapsed(!collapsed) },
+            //   onClick: () => { setCollapsed(!collapsed) },
             })}
           </Header>
           <Content

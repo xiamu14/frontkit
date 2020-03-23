@@ -7,7 +7,7 @@ import {
 } from '@formily/antd'
 import { Input, Select } from '@formily/antd-components';
 
-const { onFieldValueChange$ } = FormEffectHooks
+const { onFieldValueChange$ } = FormEffectHooks;
 
 const actions = createFormActions();
 

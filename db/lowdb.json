@@ -1,0 +1,21 @@
+{
+  "builderConf": [
+    [
+      {
+        "dataPath": "/Users/ben/Documents/w/code/myproject/magic-code/src/assets"
+      },
+      {
+        "type": "picture"
+      },
+      {
+        "templateList": [
+          {
+            "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/src/assets/logo.svg",
+            "targetFileName": "src/file.scss"
+          }
+        ]
+      }
+    ]
+  ],
+  "user": {}
+}

@@ -22,7 +22,6 @@ export default function SideMenu() {
 
     useEffect(() => {
         setSelectedKey(location.pathname === '/' ? '1' : "2");
-        console.log('这里没有再执行吗', location)
     }, [location])
 
     return (

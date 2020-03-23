@@ -7,6 +7,9 @@ import SelectTemplate from '../step/select-template';
 import SelectTargetPath from '../step/select-target-path';
 import './index.scss';
 
+// @ts-ignore
+const { ipcRenderer } = window;
+
 export default function Setup() {
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
@@ -18,18 +21,22 @@ export default function Setup() {
         if (!isClickNext && data.length === current + 1) {
             setCurrent(current + 1);
         }
+        return () => ipcRenderer.removeAllListeners('save-builder');
     }, [isClickNext, data, current])
 
     const handleNext = () => {
         if (current < 3) {
             setIsClickNext(true);
         } else {
+            ipcRenderer.send('save-builder', data);
+
             notification.open({
                 message: '配置生成器完成',
                 description:
                     '请跳转到【常用生成器】页面使用生成器自动产出代码！',
                 onClick: () => {
                     // console.log('Notification Clicked!');
+
                     history.push('/');
                     notification.destroy();
                 },
@@ -50,7 +57,7 @@ export default function Setup() {
     }
 
     const handleSelectTargetPath = (dir: string) => {
-        setData([...data, ...[{targetPath: dir}]])
+        setData([...data, ...[{ targetPath: dir }]])
     }
 
     const renderStep = () => {
