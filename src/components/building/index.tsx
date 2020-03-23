@@ -22,6 +22,7 @@ export default function Building() {
             const builderConf = JSON.parse(builderConfStr);
             setConf(builderConf);
         }
+        return () => ipcRenderer.removeAllListeners('build');
     }, [id])
     const handleClickBack = () => {
         history.goBack();
@@ -32,7 +33,6 @@ export default function Building() {
         ipcRenderer.send('build', { id, conf })
     }
     const handleClickStart = () => {
-
         start();
     }
 

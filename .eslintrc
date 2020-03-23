@@ -7,6 +7,9 @@
             "tsx": true
         }
     },
+    "env": {
+        "node": true
+    },
     "rules": {
         "semi": "error"
     }
