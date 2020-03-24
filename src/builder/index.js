@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require("fs");
 const getStat = require("../util/get-stat");
 const readDir = require("../util/read-dir");
 
@@ -10,25 +12,28 @@ module.exports = class Builder {
 
     // 初始化函数
     async init() {
-        console.log("检查下参数", this.buildConf.id, this.buildConf.conf);
+        // console.log("检查下参数", this.buildConf.id, this.buildConf.conf);
         let files = null;
         try {
             files = await this.readData();
         } catch (error) {
-            console.log("这里出错了", error);
+            console.log(error);
         }
-        console.log('没有错就显示这样的', files);
-        this.parseData(files);
-        this.seedTemplate();
-        this.createFile();
+        let data = null;
+        try {
+            data = await this.parseData(files);
+        } catch (error) {
+            console.log(error);
+        }
+        const codeArr = this.seedTemplate(data);
+        this.createFile(codeArr);
     }
 
     // 读取数据源
-    // TODO: 读取目录下所有文件吗？
     async readData() {
         let stat = null;
         let files = null;
-        const {conf} = this.buildConf;
+        const { conf } = this.buildConf;
         try {
             stat = await getStat(conf.dataPath);
         } catch (e) {
@@ -40,11 +45,45 @@ module.exports = class Builder {
         return files;
     }
     // 解析数据
-    parseData() {}
+    async parseData(files) {
+        const { conf } = this.buildConf;
+        const { parse } = conf;
+        let parser = null;
+        if (parse.type !== "custom") {
+            // 使用内置的解析器
+            parser = require(path.resolve(
+                __dirname,
+                `../parser/${parse.type}.js`
+            ));
+        }
+
+        return await parser(files);
+    }
 
     // 投喂模板
-    seedTemplate() {}
+    seedTemplate(data) {
+        const { conf } = this.buildConf;
+        const { templateList } = conf;
+        const codeArr = [];
+        for (let i = 0; i < templateList.length; i += 1) {
+            const item = templateList[i];
+            const tpl = require(item.templateFilePath);
+            const codeStr = tpl(data);
+            codeArr.push({
+                codeStr,
+                fileName: item.targetFileName
+            });
+        }
+        // console.log("检查下生成的代码数组", codeArr);
+        return codeArr;
+    }
 
     // 根据模板字符串生成文件
-    createFile() {}
+    createFile(codeArr) {
+        const { conf } = this.buildConf;
+        const { targetPath } = conf;
+        codeArr.forEach(element => {
+            fs.writeFileSync(path.join(targetPath, element.fileName), element.codeStr);
+        });
+    }
 };

@@ -1,0 +1,1 @@
+export enum Icons { clock = "icon-clock", download = "icon-download",}

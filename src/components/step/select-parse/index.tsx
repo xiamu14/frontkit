@@ -32,7 +32,7 @@ export default function SelectParse(props: Props) {
     useEffect(() => {
         if (isClickNext) {
             actions.submit((values) => {
-                onInput(true, values);
+                onInput(true, { parse: values });
             })
         }
     }, [isClickNext, onInput])

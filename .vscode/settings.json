@@ -3,6 +3,7 @@
         "Sider",
         "formily",
         "hoverable",
+        "promisify",
         "uniqueid"
     ]
 }
