@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { PageHeader, Button } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { LoadingOutlined, CheckCircleOutlined } from '@ant-design/icons'
+// import { LoadingOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { useQuery } from '../../hooks/use-query';
 import SelectTargetPath from '../step/select-target-path';
 import Process from './components/process';

@@ -18,7 +18,7 @@ module.exports = class Builder {
         let start = Date.now();
         const minDuration = 1500;
         try {
-            this.ctx.reply('onBuild', {current:0, status: "process", log: ''});
+            this.ctx.reply('onBuild', {current:0, status: "process", log: '读取数据...'});
             files = await this.readData();
             const stop = Date.now();
             const duration = stop - start;
@@ -34,7 +34,7 @@ module.exports = class Builder {
         await wait(500);
         let data = null;
         try {
-            this.ctx.reply('onBuild', {current:1, status: "finish", log: ''});
+            this.ctx.reply('onBuild', {current:1, status: "finish", log: '解析数据...'});
             data = await this.parseData(files);
             const stop = Date.now();
             const duration = stop - start;
@@ -46,10 +46,12 @@ module.exports = class Builder {
             console.log(error);
         }
 
+        this.ctx.reply('onBuild', {current: 2, status: "process", log: '生成代码...'});
         await wait(500);
         const codeArr = this.seedTemplate(data);
-        this.ctx.reply('onBuild', {current: 2, status: "process", log: JSON.stringify(codeArr)});
+        this.ctx.reply('onBuild', {current: 2, status: "finish", log: JSON.stringify(codeArr)});
 
+        this.ctx.reply('onBuild', {current: 3, status: "process", log: '生成文件...'});
         await wait(500);
         this.createFile(codeArr);
         this.ctx.reply('onBuild', {current: 3, status: "finish", log: '构建完成'});
