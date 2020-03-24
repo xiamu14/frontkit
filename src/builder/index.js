@@ -2,31 +2,58 @@ const path = require("path");
 const fs = require("fs");
 const getStat = require("../util/get-stat");
 const readDir = require("../util/read-dir");
+const wait = require("../util/wait");
 
 // 生成器函数
 module.exports = class Builder {
-    constructor(buildConf, context) {
+    constructor(buildConf, ctx) {
         this.buildConf = buildConf;
-        this.context = context;
+        this.ctx = ctx;
     }
 
     // 初始化函数
     async init() {
         // console.log("检查下参数", this.buildConf.id, this.buildConf.conf);
         let files = null;
+        let start = Date.now();
+        const minDuration = 1500;
         try {
+            this.ctx.reply('onBuild', {current:0, status: "process", log: ''});
             files = await this.readData();
+            const stop = Date.now();
+            const duration = stop - start;
+            if (duration < minDuration) {
+                await wait(minDuration - duration);
+            }
+            this.ctx.reply('onBuild', {current: 0, status: "finish", log: JSON.stringify(files)});
+            start = Date.now();
         } catch (error) {
             console.log(error);
         }
+
+        await wait(500);
         let data = null;
         try {
+            this.ctx.reply('onBuild', {current:1, status: "finish", log: ''});
             data = await this.parseData(files);
+            const stop = Date.now();
+            const duration = stop - start;
+            if (duration < minDuration) {
+                await wait(minDuration - duration);
+            }
+            this.ctx.reply('onBuild', {current: 1, status: "finish", log: JSON.stringify(data)});
         } catch (error) {
             console.log(error);
         }
+
+        await wait(500);
         const codeArr = this.seedTemplate(data);
+        this.ctx.reply('onBuild', {current: 2, status: "process", log: JSON.stringify(codeArr)});
+
+        await wait(500);
         this.createFile(codeArr);
+        this.ctx.reply('onBuild', {current: 3, status: "finish", log: '构建完成'});
+
     }
 
     // 读取数据源

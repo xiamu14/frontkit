@@ -1,12 +1,22 @@
 {
   "builderConf": [
     {
-      "dataPath": "/Users/ben/Documents/w/code/myproject/magic-code/src/assets",
-      "type": "picture",
+      "dataPath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/data/icons",
+      "parse": {
+        "type": "picture"
+      },
       "templateList": [
         {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/src/assets/logo.svg",
-          "targetFileName": "file.scss"
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/template/icon/index.js",
+          "targetFileName": "index.tsx"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/template/icon/style.js",
+          "targetFileName": "index.css"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/template/icon/type.js",
+          "targetFileName": "type.ts"
         }
       ],
       "info": {
