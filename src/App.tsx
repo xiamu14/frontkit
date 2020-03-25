@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout } from 'antd';
+import { Layout, ConfigProvider } from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -9,6 +9,7 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import zhCN from 'antd/es/locale/zh_CN';
 import 'antd/dist/antd.css';
 import './App.scss';
 import SideMenu from './components/side-menu';
@@ -23,43 +24,45 @@ export default function App() {
     const [collapsed] = useState(false);
 
     return (
-        <Router>
-            <Layout>
-                <Sider trigger={null} collapsible collapsed={collapsed}>
-                    <div className="logo" >
-                        <img src={Logo} alt='logo' />
-                    </div>
-                    <SideMenu />
-                </Sider>
-                <Layout className="site-layout">
-                    <Header className="site-layout-background" style={{ padding: "0" }}>
-                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                            className: 'trigger',
-                            //   onClick: () => { setCollapsed(!collapsed) },
-                        })}
-                    </Header>
-                    <Content
-                        className="site-layout-background"
-                        style={{
-                            margin: '24px 16px',
-                            padding: 24,
-                            minHeight: 280,
-                        }}
-                    >
-                        <Switch>
-                            <Route path="/" exact>
-                                <BuilderList />
-                            </Route>
-                            <Route path="/setup" exact>
-                                <Setup />
-                            </Route>
-                            <Route path="/building" exact>
-                                <Building />
-                            </Route>
-                        </Switch>
-                    </Content>
+        <ConfigProvider locale={zhCN}>
+            <Router>
+                <Layout>
+                    <Sider trigger={null} collapsible collapsed={collapsed}>
+                        <div className="logo" >
+                            <img src={Logo} alt='logo' />
+                        </div>
+                        <SideMenu />
+                    </Sider>
+                    <Layout className="site-layout">
+                        <Header className="site-layout-background" style={{ padding: "0" }}>
+                            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                                className: 'trigger',
+                                //   onClick: () => { setCollapsed(!collapsed) },
+                            })}
+                        </Header>
+                        <Content
+                            className="site-layout-background"
+                            style={{
+                                margin: '24px 16px',
+                                padding: 24,
+                                minHeight: 280,
+                            }}
+                        >
+                            <Switch>
+                                <Route path="/" exact>
+                                    <BuilderList />
+                                </Route>
+                                <Route path="/setup" exact>
+                                    <Setup />
+                                </Route>
+                                <Route path="/building" exact>
+                                    <Building />
+                                </Route>
+                            </Switch>
+                        </Content>
+                    </Layout>
                 </Layout>
-            </Layout>
-        </Router>
+            </Router>
+        </ConfigProvider>
     );
 }

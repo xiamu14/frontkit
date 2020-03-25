@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Steps, Button, notification, Modal } from 'antd';
 import { useHistory } from 'react-router-dom';
 import SelectDataPath from '../step/select-data-path';
@@ -7,6 +7,7 @@ import SelectTemplate from '../step/select-template';
 import SelectTargetPath from '../step/select-target-path';
 import InfoForm from './components/info-form';
 import './index.scss';
+import { useQuery } from '../../hooks/use-query';
 
 // @ts-ignore
 const { ipcRenderer } = window;
@@ -19,11 +20,25 @@ export default function Setup() {
     const [isClickNext, setIsClickNext] = useState(false);
     const history = useHistory();
 
+    const query = useQuery();
+    const id = useMemo(() => query.get('id') as string, [query])
+
     useEffect(() => {
-        if (!isClickNext && Object.keys(data).length === current + 1) {
+        if (id) {
+            // 根据id 获取数据
+            ipcRenderer.send('read-builder', { id });
+            ipcRenderer.on('read-builder', (_, builder) => {
+                console.log('查看下啊', builder);
+                setData(builder);
+            });
+        }
+        return () => ipcRenderer.removeAllListeners();
+    }, [id])
+
+    useEffect(() => {
+        if (!isClickNext && Object.keys(data).length === current + 1 && current !== 3) {
             setCurrent(current + 1);
         }
-        return () => ipcRenderer.removeAllListeners('save-builder');
     }, [isClickNext, data, current])
 
     const handleOk = (res: Record<'info', any>) => {
@@ -63,7 +78,7 @@ export default function Setup() {
     }
 
     const handleSelectTargetPath = (dir: Record<'targetPath', string>) => {
-        setData({ ...data, ...dir })
+        setData({ ...data, ...dir });
     }
 
     const renderStep = () => {

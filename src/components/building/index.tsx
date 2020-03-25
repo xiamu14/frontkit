@@ -14,12 +14,12 @@ type processStatus = 'wait' | 'process' | 'finish' | 'error';
 
 export default function Building() {
     const history = useHistory();
-    const query = useQuery();
     const [conf, setConf] = useState<Record<string, any>>();
     const [status, setStatus] = useState<Status>('default');
     const [current, setCurrent] = useState(0);
     const [processLog, setProcessLog] = useState('');
     const [processStatus, setProcessStatus] = useState<processStatus>('process');
+    const query = useQuery();
     const id = useMemo(() => query.get('id') as string, [query])
     useEffect(() => {
         const builderConfStr = localStorage.getItem(id);
