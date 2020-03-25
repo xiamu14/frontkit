@@ -2,8 +2,10 @@
   "name": "magic-code",
   "version": "0.1.0",
   "private": true,
-  "main": "main.js",
+  "main": "electron.js",
   "homepage": "./",
+  "repository": "http://gitea.ohcat.xyz/utooo/magic-code.git",
+  "description": "前端代码生成器",
   "dependencies": {
     "@formily/antd": "^1.0.9",
     "@formily/antd-components": "^1.0.9",
@@ -15,7 +17,6 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "antd": "^4.0.3",
-    "electron": "^8.1.1",
     "image-size": "^0.8.3",
     "lodash.uniqueid": "^4.0.1",
     "lowdb": "^1.0.0",
@@ -32,7 +33,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
-    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "pack:dmg": "electron-builder -m dmg"
   },
   "author": {
     "name": "ben",
@@ -40,11 +42,16 @@
     "url": "https://website.com"
   },
   "build": {
-    "appId": "com.website.my-app",
+    "appId": "com.magic-code.app",
     "productName": "magic-code",
     "copyright": "Copyright © 2019 ${author}",
     "mac": {
-      "category": "public.app-category.utilities"
+        "icon": "src/assets/icon.png",
+        "type": "development",
+        "category": "public.app-category.developer-tools",
+        "target": [
+          "dmg"
+        ]
     },
     "files": [
       "build/**/*",
@@ -75,6 +82,8 @@
     "babel-plugin-import": "^1.13.0",
     "concurrently": "^5.1.0",
     "customize-cra": "^0.9.1",
+    "electron": "^8.1.1",
+    "electron-builder": "^22.4.1",
     "electron-is-dev": "^1.1.0",
     "react-app-rewired": "^2.1.5",
     "sass": "^1.26.3",

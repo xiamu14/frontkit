@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require("path");
 const isDev = require("electron-is-dev");
-const event = require("./src/event");
+const event = require("./app/event");
 
 let mainWindow;
 
@@ -14,13 +14,13 @@ function createWindow() {
     height: 980,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, "./src/helper/preload.js")
+      preload: path.join(__dirname, "./app/helper/preload.js")
     }
   });
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "../build/index.html")}`
+      : `file://${path.join(__dirname, "./index.html")}`
   );
   if (isDev) {
     // Open the DevTools.
@@ -28,7 +28,7 @@ function createWindow() {
     mainWindow.webContents.openDevTools();
   }
   if (process.platform === 'darwin') {
-    app.dock.setIcon(path.join(__dirname, './src/assets/icon_200x200@2x.icon.png'));
+    app.dock.setIcon(path.join(__dirname, './app/assets/icon.png'));
     }
   mainWindow.on("closed", () => (mainWindow = null));
 
