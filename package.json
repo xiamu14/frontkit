@@ -17,6 +17,7 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "antd": "^4.0.3",
+    "electron-is-dev": "^1.1.0",
     "image-size": "^0.8.3",
     "lodash.uniqueid": "^4.0.1",
     "lowdb": "^1.0.0",
@@ -30,11 +31,11 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && node ./tasks/prepack.js",
     "test": "react-app-rewired test",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "pack:dmg": "electron-builder -m dmg"
+    "pack:dmg": "yarn build && electron-builder -m dmg"
   },
   "author": {
     "name": "ben",
@@ -46,12 +47,12 @@
     "productName": "magic-code",
     "copyright": "Copyright © 2019 ${author}",
     "mac": {
-        "icon": "src/assets/icon.png",
-        "type": "development",
-        "category": "public.app-category.developer-tools",
-        "target": [
-          "dmg"
-        ]
+      "icon": "app/assets/icon.png",
+      "type": "production",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        "dmg"
+      ]
     },
     "files": [
       "build/**/*",
@@ -84,7 +85,7 @@
     "customize-cra": "^0.9.1",
     "electron": "^8.1.1",
     "electron-builder": "^22.4.1",
-    "electron-is-dev": "^1.1.0",
+    "fs-extra": "^9.0.0",
     "react-app-rewired": "^2.1.5",
     "sass": "^1.26.3",
     "source-map-explorer": "^2.4.0",
