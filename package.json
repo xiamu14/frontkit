@@ -47,8 +47,8 @@
     "productName": "magic-code",
     "copyright": "Copyright © 2019 ${author}",
     "mac": {
-      "icon": "app/assets/icon.png",
-      "type": "production",
+      "icon": "app/assets/icon.icns",
+      "type": "development",
       "category": "public.app-category.developer-tools",
       "target": [
         "dmg"
