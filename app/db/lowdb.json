@@ -1,23 +1,4 @@
 {
-  "builderConf": [
-    {
-      "id": "Zxbcprb7z",
-      "dataPath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/data/icons",
-      "parse": {
-        "type": "picture"
-      },
-      "templateList": [
-        {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/template/icon/index.js",
-          "targetFileName": "index.tsx"
-        }
-      ],
-      "targetPath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/data",
-      "info": {
-        "name": "图标组件生成器",
-        "desc": "用于 React + Typescript 项目"
-      }
-    }
-  ],
-  "user": {}
+    "builderConf": [],
+    "user": {}
 }

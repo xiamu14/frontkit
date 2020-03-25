@@ -34,7 +34,7 @@
     "build": "react-app-rewired build && node ./tasks/prepack.js",
     "test": "react-app-rewired test",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
-    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && ELECTRON_IS_DEV=1 electron .\"",
     "pack:dmg": "yarn build && electron-builder -m dmg"
   },
   "author": {

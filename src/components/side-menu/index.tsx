@@ -20,7 +20,12 @@ export default function SideMenu() {
     }
 
     useEffect(() => {
+        history.push('/'); // 这里是因为生产环境 首页初始化时 react-router-dom 无法匹配到 ‘/’ , 只能手动跳转一次，体验没有差异
+    }, [history])
+
+    useEffect(() => {
         setSelectedKey(location.pathname);
+
     }, [location])
 
     return (
