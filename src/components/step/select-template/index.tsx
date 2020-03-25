@@ -87,11 +87,12 @@ const actions = createFormActions();
 
 interface Props {
     isClickNext: boolean
+    initialValue?:  Record<string, any>
     onInput: (status: boolean, fieldData?: Record<string, any>) => void;
 }
 
 export default function SelectTemplate(props: Props) {
-    const { isClickNext, onInput } = props;
+    const { isClickNext, onInput, initialValue } = props;
 
     useEffect(() => {
         type Values = { templateList: Record<string, string>[] };
@@ -117,13 +118,14 @@ export default function SelectTemplate(props: Props) {
                 Input,
                 SelectFile
             }}
+            // initialValues={initialValue}
             actions={actions}
         >
             <Field
                 title=""
                 name="templateList"
                 type="array"
-                default={[{}]}
+                default={initialValue || [{}]}
                 x-component="ArrayCustom"
                 required={true}
             >

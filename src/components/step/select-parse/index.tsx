@@ -24,11 +24,12 @@ const oneToManyEffects = () => {
 
 interface Props {
     isClickNext: boolean
+    initialValue?: Record<string, any>
     onInput: (status: boolean, fieldData?: Record<string, any>) => void;
 }
 
 export default function SelectParse(props: Props) {
-    const { isClickNext, onInput } = props;
+    const { isClickNext, onInput, initialValue } = props;
     useEffect(() => {
         if (isClickNext) {
             actions.submit((values) => {
@@ -41,9 +42,7 @@ export default function SelectParse(props: Props) {
         <div className="select-parse-box">
             <SchemaForm
                 components={{ Input, Select }}
-                onSubmit={values => {
-                    console.log(values)
-                }}
+                initialValues={initialValue}
                 actions={actions}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}

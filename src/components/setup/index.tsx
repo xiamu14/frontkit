@@ -16,6 +16,7 @@ export default function Setup() {
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
     const [data, setData] = useState<Record<string, any>>({});
+    const [initialValues, setInitialValues] = useState<Record<string, any>>({});
     const [visible, setVisible] = useState(false);
     const [isClickNext, setIsClickNext] = useState(false);
     const history = useHistory();
@@ -29,7 +30,7 @@ export default function Setup() {
             ipcRenderer.send('read-builder', { id });
             ipcRenderer.on('read-builder', (_, builder) => {
                 console.log('查看下啊', builder);
-                setData(builder);
+                setInitialValues(builder);
             });
         }
         return () => ipcRenderer.removeAllListeners();
@@ -86,22 +87,22 @@ export default function Setup() {
         switch (current) {
             case 0:
                 html = (
-                    <SelectDataPath isClickNext={isClickNext} onInput={handleInput} />
+                    <SelectDataPath isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.dataPath} />
                 )
                 break;
             case 1:
                 html = (
-                    <SelectParse isClickNext={isClickNext} onInput={handleInput} />
+                    <SelectParse isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.parse} />
                 );
                 break;
             case 2:
                 html = (
-                    <SelectTemplate isClickNext={isClickNext} onInput={handleInput} />
+                    <SelectTemplate isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.templateList} />
                 )
                 break;
             case 3:
                 html = (
-                    <SelectTargetPath onSelected={handleSelectTargetPath} />
+                    <SelectTargetPath onSelected={handleSelectTargetPath} initialValue={initialValues?.targetPath} />
                 )
                 break;
             default:

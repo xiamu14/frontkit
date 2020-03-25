@@ -7,14 +7,21 @@ import './index.scss';
 const { ipcRenderer } = window;
 
 interface Props {
+    initialValue?: string
     isClickNext: boolean
     onInput: (status: boolean, fieldData?: Record<string, any>) => void;
 }
 
 export default function SelectDataPath(props: Props) {
-    const { isClickNext, onInput } = props;
+    const { isClickNext, onInput, initialValue } = props;
 
     const [path, setPath] = useState<string>();
+
+    useEffect(() => {
+        if (initialValue) {
+            setPath(initialValue);
+        }
+    }, [initialValue])
 
     const handleSelectDirectory = () => {
         ipcRenderer.send('open-directory-dialog', ['openDirectory']);

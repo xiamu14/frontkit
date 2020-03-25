@@ -8,10 +8,18 @@ const { ipcRenderer } = window;
 
 interface Props {
     onSelected: (dir: Record<'targetPath', string>) => void;
+    initialValue?: string
 }
 
 export default function SelectTargetPath(props: Props) {
-    const [path, setPath] = useState<Record<'targetPath', string>>();
+    const { initialValue } = props;
+    const [path, setPath] = useState<string>();
+
+    useEffect(() => {
+        if (initialValue) {
+            setPath(initialValue);
+        }
+    }, [initialValue])
 
     const handleSelectDirectory = () => {
         ipcRenderer.send('open-directory-dialog', ['openDirectory']);
@@ -21,7 +29,7 @@ export default function SelectTargetPath(props: Props) {
         ipcRenderer.on('selected-directory', (_, directory: string[]) => {
             // TODO: 这里还缺少了错误处理
             if (directory && directory.length > 0) {
-                setPath({ targetPath: directory[0] });
+                setPath(directory[0]);
                 props.onSelected({ targetPath: directory[0] });
             }
         })
@@ -33,7 +41,7 @@ export default function SelectTargetPath(props: Props) {
             <Button type="primary" icon={<FolderOutlined />} className="btn-select-file" onClick={handleSelectDirectory}>选择代码生成目录</Button>
             {path ? <div className="file-path">
                 <span>生成目录：</span>
-                <span>{path.targetPath}</span>
+                <span>{path}</span>
             </div> : ""}
         </div>
     )
