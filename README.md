@@ -36,7 +36,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://ohcat.xyz"><img src="https://avatars3.githubusercontent.com/u/10813360?v=4" width="60px;" alt=""/><br /><sub><b>Ben</b></sub></a><br /><a href="https://github.com/ben/magic-code/commits?author=xiamu14" title="Documentation">📖</a> <a href="https://github.com/ben/magic-code/commits?author=xiamu14" title="Code">💻</a></td>
+    <td align="center"><a href="http://ohcat.xyz"><img src="https://avatars3.githubusercontent.com/u/10813360?v=4" width="60px;" alt=""/><br /><sub><b>Ben</b></sub></a><br /><a href="https://github.com/ben/magic-code/commits?author=xiamu14" title="Code">💻</a></td>
   </tr>
 </table>
 
