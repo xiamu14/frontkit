@@ -1,4 +1,7 @@
 # Magic Code
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 Magic Code - 前端代码片段生成器。
 
 ![](https://images.unsplash.com/photo-1503437313881-503a91226402?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80)
@@ -24,4 +27,21 @@ Magic Code 是前端辅助开发工具，可以辅助开发者在项目里生成
 
 ## 参与开发
 
-## 贡献者
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://ohcat.xyz"><img src="https://avatars3.githubusercontent.com/u/10813360?v=4" width="60px;" alt=""/><br /><sub><b>Ben</b></sub></a><br /><a href="https://github.com/ben/magic-code/commits?author=xiamu14" title="Documentation">📖</a> <a href="https://github.com/ben/magic-code/commits?author=xiamu14" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

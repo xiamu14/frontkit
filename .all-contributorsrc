@@ -1,0 +1,25 @@
+{
+  "projectName": "magic-code",
+  "projectOwner": "ben",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 60,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "xiamu14",
+      "name": "Ben",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/10813360?v=4",
+      "profile": "http://ohcat.xyz",
+      "contributions": [
+        "doc",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
