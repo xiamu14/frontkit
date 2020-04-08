@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { PageHeader, Button } from 'antd';
 import { useHistory } from 'react-router-dom';
-// import { LoadingOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { useQuery } from '../../hooks/use-query';
 import SelectTargetPath from '../step/select-target-path';
 import Process from './components/process';
 import './index.scss';
+import SelectPath from '../select-path';
 
 // @ts-ignore
 const { ipcRenderer } = window;
@@ -49,24 +49,12 @@ export default function Building() {
         start();
     }
 
-    const handleSelected = (dir: Record<'targetPath', string>) => {
+    const handleTargetPathSelected = (dir: Record<'targetPath', string>) => {
         setConf({ ...conf, ...dir });
     }
-
-    // const subTitleHtml = () => {
-    //     let html: React.ReactElement | string = '';
-    //     switch (status) {
-    //         case 'process':
-    //             html = <LoadingOutlined style={{ fontSize: '16px' }} />
-    //             break;
-    //         case "success":
-    //             html = <CheckCircleOutlined style={{ fontSize: "16px", color: "#52c41a" }} />
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    //     return html;
-    // }
+    const handleDataPathSelected = (dir: Record<'path', string>) => {
+        setConf({ ...conf, ...{ dataPath: dir.path } })
+    }
 
     return (
         <div>
@@ -74,11 +62,17 @@ export default function Building() {
                 className="site-page-header"
                 onBack={handleClickBack}
                 title={`${conf.info.name}`}
-                // subTitle={subTitleHtml()}
             /> : ''}
             {status === 'default' ? <div className='btn-init'>
-                {conf && conf.targetPath ? <Button type='primary' shape='round' onClick={handleClickStart}>开始</Button> : <SelectTargetPath onSelected={handleSelected} />}
-            </div> : <Process current={current} content={processLog}  status={processStatus} />}
+                {conf && conf.targetPath && conf.dataPath ? <Button type='primary' shape='round' onClick={handleClickStart}>开始</Button> : null}
+                {
+                    conf && !conf.dataPath ? <SelectPath onSelected={handleDataPathSelected} title="选择数据源目录" /> : null
+                }
+                {
+                    conf && !conf.targetPath ? <SelectTargetPath onSelected={handleTargetPathSelected} /> : null
+                }
+
+            </div> : <Process current={current} content={processLog} status={processStatus} />}
         </div>
     )
 }

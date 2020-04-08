@@ -7,6 +7,7 @@ import './index.scss';
 const { ipcRenderer } = window;
 
 interface Props {
+    
     onSelected: (dir: Record<'targetPath', string>) => void;
     initialValue?: string
 }

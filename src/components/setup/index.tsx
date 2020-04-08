@@ -19,6 +19,7 @@ export default function Setup() {
     const [initialValues, setInitialValues] = useState<Record<string, any>>({});
     const [visible, setVisible] = useState(false);
     const [isClickNext, setIsClickNext] = useState(false);
+    const [isGoNext, setIsGoNext] = useState(false);
     const history = useHistory();
 
     const query = useQuery();
@@ -29,7 +30,7 @@ export default function Setup() {
             // 根据id 获取数据
             ipcRenderer.send('read-builder', { id });
             ipcRenderer.on('read-builder', (_, builder) => {
-                console.log('查看下啊', builder);
+                // console.log('查看下啊', builder);
                 setInitialValues(builder);
             });
         }
@@ -37,10 +38,12 @@ export default function Setup() {
     }, [id])
 
     useEffect(() => {
-        if (!isClickNext && Object.keys(data).length === current + 1 && current !== 3) {
+        if (isGoNext && current !== 3) {
             setCurrent(current + 1);
+
+            setIsGoNext(false);
         }
-    }, [isClickNext, data, current])
+    }, [isGoNext, current])
 
     const handleOk = (res: Record<'info', any>) => {
         setVisible(false);
@@ -67,13 +70,13 @@ export default function Setup() {
     }
 
     const handlePrev = () => {
-        setCurrent(current - 1);
+        setCurrent((now) => now - 1);
     }
 
     const handleInput = (status: boolean, fieldData?: Record<string, any>) => {
         if (status && fieldData) {
-            // setCurrent(current + 1);
-            setData({ ...data, ...fieldData })
+            setData({ ...data, ...fieldData });
+            setIsGoNext(true);
         }
         setIsClickNext(false);
     }
@@ -87,22 +90,22 @@ export default function Setup() {
         switch (current) {
             case 0:
                 html = (
-                    <SelectDataPath isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.dataPath} />
+                    <SelectDataPath isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.dataPath || data?.dataPath} />
                 )
                 break;
             case 1:
                 html = (
-                    <SelectParse isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.parse} />
+                    <SelectParse isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.parse || data?.parse} />
                 );
                 break;
             case 2:
                 html = (
-                    <SelectTemplate isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.templateList} />
+                    <SelectTemplate isClickNext={isClickNext} onInput={handleInput} initialValue={initialValues?.templateList || data?.templateList} />
                 )
                 break;
             case 3:
                 html = (
-                    <SelectTargetPath onSelected={handleSelectTargetPath} initialValue={initialValues?.targetPath} />
+                    <SelectTargetPath onSelected={handleSelectTargetPath} initialValue={initialValues?.targetPath || data?.targetPath} />
                 )
                 break;
             default:

@@ -17,6 +17,23 @@
         "name": "图标组件生成器",
         "desc": "用于 React + Typescript 项目"
       }
+    },
+    {
+      "id": "N2HucG055",
+      "dataPath": "",
+      "parse": {
+        "type": "json"
+      },
+      "templateList": [
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/template/ant-table-pro/index.js",
+          "targetFileName": "index.tsx"
+        }
+      ],
+      "info": {
+        "name": "ant design 复杂表单组件",
+        "desc": "1. 复杂表单组件\n2. 支持搜索，分页，排序显示\n3. 完整的 api 请求"
+      }
     }
   ],
   "user": {}
