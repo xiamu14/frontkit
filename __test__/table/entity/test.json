@@ -1,0 +1,25 @@
+{
+    "title": "测试表格",
+    "ItemInterface": "{id: string,uid: string, userName: string }",
+    "columns": [
+        {
+            "title": "ID",
+            "dataIndex": "id",
+            "width": 80
+        },
+        {
+            "title": "用户ID",
+            "dataIndex": "uid",
+            "width": 80
+        },
+        {
+            "title": "用户昵称",
+            "dataIndex": "userName",
+            "width": 140
+        }
+    ],
+    "api": {
+        "url": "/user/report-list",
+        "method": "GET"
+    }
+}

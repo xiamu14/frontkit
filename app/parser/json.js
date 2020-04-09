@@ -1,4 +1,3 @@
-const path = require("path");
 module.exports = async function pictureParser(files) {
     const data = [];
     return new Promise(async resolve => {
@@ -12,6 +11,9 @@ module.exports = async function pictureParser(files) {
 async function read(files, data, relative) {
     for (let i = 0; i < files.length; i += 1) {
         const item = files[i];
+        if (item.suffix !== 'json') {
+            continue;
+        }
         if (item.isDirectory) {
             read(
                 item.child,
@@ -29,7 +31,7 @@ async function read(files, data, relative) {
     try {
         // 循环执行
         let result = data.forEach(async item => {
-            const object = require(item);
+            const object = require(item.path);
             item.object = object;
         });
         data = result;

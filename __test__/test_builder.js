@@ -1,10 +1,10 @@
-const Builder = require("../src/builder");
+const Builder = require("../app/builder");
 const conf = {
     id: "build_1",
     conf: {
         dataPath:
-            "/Users/ben/Documents/w/code/myproject/magic-code/__test__/data/icons",
-        parse: { type: "picture" },
+            "/Users/ben/Documents/w/code/myproject/magic-code/__test__/data/table",
+        parse: { type: "json" },
         templateList: [
             {
                 templateFilePath:

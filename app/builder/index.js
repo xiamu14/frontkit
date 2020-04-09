@@ -3,7 +3,7 @@ const fs = require("fs");
 const getStat = require("../util/get-stat");
 const readDir = require("../util/read-dir");
 const wait = require("../util/wait");
-
+const dirExists = require("../util/dir-exits");
 // 生成器函数
 module.exports = class Builder {
     constructor(buildConf, ctx) {
@@ -18,14 +18,23 @@ module.exports = class Builder {
         let start = Date.now();
         const minDuration = 1500;
         try {
-            this.ctx.reply('onBuild', {current:0, status: "process", log: '读取数据...'});
+            this.ctx.reply("onBuild", {
+                current: 0,
+                status: "process",
+                log: "读取数据...",
+            });
             files = await this.readData();
+
             const stop = Date.now();
             const duration = stop - start;
             if (duration < minDuration) {
                 await wait(minDuration - duration);
             }
-            this.ctx.reply('onBuild', {current: 0, status: "finish", log: JSON.stringify(files)});
+            this.ctx.reply("onBuild", {
+                current: 0,
+                status: "finish",
+                log: JSON.stringify(files),
+            });
             start = Date.now();
         } catch (error) {
             console.log(error);
@@ -34,28 +43,52 @@ module.exports = class Builder {
         await wait(500);
         let data = null;
         try {
-            this.ctx.reply('onBuild', {current:1, status: "finish", log: '解析数据...'});
+            this.ctx.reply("onBuild", {
+                current: 1,
+                status: "finish",
+                log: "解析数据...",
+            });
             data = await this.parseData(files);
+
             const stop = Date.now();
             const duration = stop - start;
             if (duration < minDuration) {
                 await wait(minDuration - duration);
             }
-            this.ctx.reply('onBuild', {current: 1, status: "finish", log: JSON.stringify(data)});
+            this.ctx.reply("onBuild", {
+                current: 1,
+                status: "finish",
+                log: JSON.stringify(data),
+            });
         } catch (error) {
             console.log(error);
         }
 
-        this.ctx.reply('onBuild', {current: 2, status: "process", log: '生成代码...'});
+        this.ctx.reply("onBuild", {
+            current: 2,
+            status: "process",
+            log: "生成代码...",
+        });
         await wait(500);
         const codeArr = this.seedTemplate(data);
-        this.ctx.reply('onBuild', {current: 2, status: "finish", log: JSON.stringify(codeArr)});
+        this.ctx.reply("onBuild", {
+            current: 2,
+            status: "finish",
+            log: JSON.stringify(codeArr),
+        });
 
-        this.ctx.reply('onBuild', {current: 3, status: "process", log: '生成文件...'});
+        this.ctx.reply("onBuild", {
+            current: 3,
+            status: "process",
+            log: "生成文件...",
+        });
         await wait(500);
         this.createFile(codeArr);
-        this.ctx.reply('onBuild', {current: 3, status: "finish", log: '构建完成'});
-
+        this.ctx.reply("onBuild", {
+            current: 3,
+            status: "finish",
+            log: "构建完成",
+        });
     }
 
     // 读取数据源
@@ -100,7 +133,7 @@ module.exports = class Builder {
             const codeStr = tpl(data);
             codeArr.push({
                 codeStr,
-                fileName: item.targetFileName
+                fileName: item.targetFileName,
             });
         }
         // console.log("检查下生成的代码数组", codeArr);
@@ -111,8 +144,20 @@ module.exports = class Builder {
     createFile(codeArr) {
         const { conf } = this.buildConf;
         const { targetPath } = conf;
-        codeArr.forEach(element => {
-            fs.writeFileSync(path.join(targetPath, element.fileName), element.codeStr);
+        const promiseArr = [];
+        codeArr.forEach((element) => {
+            promiseArr.push(
+                new Promise(async () => {
+                    const filePath = path.join(targetPath, element.fileName);
+                    const tempDir = path.parse(filePath).dir; //拿到上级路径
+                    await dirExists(tempDir);
+                    // console.log('这里不对吗', tempDir, filePath);
+
+                    fs.writeFileSync(filePath, element.codeStr);
+                })
+            );
         });
+
+        Promise.all(promiseArr);
     }
 };

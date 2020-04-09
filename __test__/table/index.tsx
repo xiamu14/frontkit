@@ -1,6 +1,4 @@
-module.exports = function indexTpl(data) {
-    const { ItemInterface, columns, title } = data[0].object;
-    const tpl = `
+
     import React, { useRef, useState, useCallback } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
@@ -12,9 +10,9 @@ import { getList } from "./apis/list(get)";
 import PreviewImg from "../../preview_img";
 import setColumnCenter from "../../../util/set_column_center";
 
-interface Item ${ItemInterface}
+interface Item {id: string, nickname: string }
 
-const columns: ProColumns<Item>[] = setColumnCenter(${JSON.stringify(columns)});
+const columns: ProColumns<Item>[] = setColumnCenter([{"title":"用户ID","dataIndex":"uid","width":100}]);
 
 export default () => {
   const actionRef = useRef<ActionType>();
@@ -42,13 +40,10 @@ export default () => {
         request={handleRequest}
         rowKey="uid"
         dateFormatter="string"
-        headerTitle="${title}"
+        headerTitle="测试表格"
       />
     </>
   );
 };
 
-    `;
-
-    return tpl;
-};
+    

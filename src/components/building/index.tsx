@@ -66,10 +66,8 @@ export default function Building() {
             {status === 'default' ? <div className='btn-init'>
                 {conf && conf.targetPath && conf.dataPath ? <Button type='primary' shape='round' onClick={handleClickStart}>开始</Button> : null}
                 {
-                    conf && !conf.dataPath ? <SelectPath onSelected={handleDataPathSelected} title="选择数据源目录" /> : null
-                }
-                {
-                    conf && !conf.targetPath ? <SelectTargetPath onSelected={handleTargetPathSelected} /> : null
+                    conf && !conf.dataPath ? <SelectPath onSelected={handleDataPathSelected} title="选择数据源目录" /> :
+                        conf && !conf.targetPath ? <SelectTargetPath onSelected={handleTargetPathSelected} /> : null
                 }
 
             </div> : <Process current={current} content={processLog} status={processStatus} />}
