@@ -1,9 +1,15 @@
 {
     "cSpell.words": [
+        "Contenful",
+        "Contentful",
         "Sider",
+        "craco",
         "formily",
         "hoverable",
+        "linaria",
         "promisify",
+        "unfetch",
         "uniqueid"
-    ]
+    ],
+    "deno.enable": false
 }

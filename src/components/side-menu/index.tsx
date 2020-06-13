@@ -3,6 +3,7 @@ import { Menu } from 'antd';
 import {
     AppstoreOutlined,
     BuildOutlined,
+    ShopOutlined,
 } from '@ant-design/icons';
 import {
     useHistory,
@@ -32,11 +33,15 @@ export default function SideMenu() {
         <Menu theme="dark" mode="inline" selectedKeys={[selectedKey]}>
             <Menu.Item key="/" onClick={() => handleSwitch('/')}>
                 <AppstoreOutlined />
-                <span >常用生成器</span>
+                <span>常用生成器</span>
             </Menu.Item>
             <Menu.Item key="/setup" onClick={() => handleSwitch('/setup')}>
                 <BuildOutlined />
-                <span >配置生成器</span>
+                <span>配置生成器</span>
+            </Menu.Item>
+            <Menu.Item key="/market" onClick={() => handleSwitch('/market')}>
+                <ShopOutlined />
+                <span>生成器函数</span>
             </Menu.Item>
         </Menu>
     )

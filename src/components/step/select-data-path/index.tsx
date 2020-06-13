@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { FolderOutlined } from "@ant-design/icons";
 import './index.scss';
 
@@ -11,6 +11,7 @@ interface Props {
     isClickNext: boolean
     onInput: (status: boolean, fieldData?: Record<string, any>) => void;
 }
+const channel = 'selectedDataPath';
 
 export default function SelectDataPath(props: Props) {
     const { isClickNext, onInput, initialValue } = props;
@@ -24,7 +25,7 @@ export default function SelectDataPath(props: Props) {
     }, [initialValue])
 
     const handleSelectDirectory = () => {
-        ipcRenderer.send('open-directory-dialog', ['openDirectory']);
+        ipcRenderer.send('open-directory-dialog', [['openDirectory'], {channel}]);
     }
 
     useEffect(() => {
@@ -41,7 +42,7 @@ export default function SelectDataPath(props: Props) {
     }, [isClickNext, onInput, path])
 
     useEffect(() => {
-        ipcRenderer.on('selected-directory', (_, directory: string[]) => {
+        ipcRenderer.on(channel, (_, directory: string[]) => {
             // console.log('检查下啊', directory);
             // TODO: 这里还缺少了错误处理
             if (directory && directory.length > 0) {
@@ -49,7 +50,7 @@ export default function SelectDataPath(props: Props) {
                 // props.onSelected(directory[0]);
             }
         })
-        return () => ipcRenderer.removeAllListeners('selected-directory')
+        return () => ipcRenderer.removeAllListeners(channel)
     }, [props])
 
     return (

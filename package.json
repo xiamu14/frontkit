@@ -7,8 +7,10 @@
   "repository": "http://gitea.ohcat.xyz/utooo/magic-code.git",
   "description": "前端代码生成器",
   "dependencies": {
+    "@craco/craco": "^5.6.4",
     "@formily/antd": "^1.0.9",
     "@formily/antd-components": "^1.0.9",
+    "@redchili/toolkit": "^1.0.3-beta.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -17,8 +19,10 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "antd": "^4.0.3",
+    "data-matcher": "^0.1.7",
     "electron-is-dev": "^1.1.0",
     "image-size": "^0.8.3",
+    "linaria": "^1.3.3",
     "lodash.uniqueid": "^4.0.1",
     "lowdb": "^1.0.0",
     "react": "^16.13.0",
@@ -27,7 +31,9 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "shortid": "^2.2.15",
-    "typescript": "^3.8.3"
+    "swr": "^0.2.3",
+    "typescript": "^3.8.3",
+    "unfetch": "^4.1.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -78,6 +84,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
     "@types/react-router-dom": "^5.1.3",
     "all-contributors-cli": "^6.14.0",
     "antd-dayjs-webpack-plugin": "^0.0.8",

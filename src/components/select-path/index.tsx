@@ -9,11 +9,12 @@ const { ipcRenderer } = window;
 interface Props {
     title: string,
     onSelected: (dir: Record<'path', string>) => void;
+    channel: string,
     initialValue?: string
 }
 
 export default function SelectPath(props: Props) {
-    const { initialValue, title } = props;
+    const { initialValue, title, channel } = props;
     const [path, setPath] = useState<string>();
 
     useEffect(() => {
@@ -23,19 +24,19 @@ export default function SelectPath(props: Props) {
     }, [initialValue])
 
     const handleSelectDirectory = () => {
-        ipcRenderer.send('open-directory-dialog', ['openDirectory']);
+        ipcRenderer.send('open-directory-dialog', [['openDirectory'], {channel}]);
     }
 
     useEffect(() => {
-        ipcRenderer.on('selected-directory', (_, directory: string[]) => {
+        ipcRenderer.on(channel, (_, directory: string[]) => {
             // TODO: 这里还缺少了错误处理
             if (directory && directory.length > 0) {
                 setPath(directory[0]);
                 props.onSelected({ path: directory[0] });
             }
         })
-        return () => ipcRenderer.removeAllListeners('selected-directory')
-    }, [props])
+        return () => ipcRenderer.removeAllListeners(channel)
+    }, [props, channel])
 
     return (
         <div className='select-data-path-box'>

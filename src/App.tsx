@@ -6,7 +6,6 @@ import {
 } from '@ant-design/icons';
 import {
     BrowserRouter as Router,
-    // HashRouter as Router,
     Switch,
     Route,
 } from "react-router-dom";
@@ -18,6 +17,7 @@ import Setup from './components/setup';
 import BuilderList from './components/builder-list';
 import Building from './components/building';
 import Logo from './assets/logo.svg';
+import BuilderMarket from './components/builder-market';
 const { Header, Sider, Content } = Layout;
 
 export default function App() {
@@ -53,11 +53,15 @@ export default function App() {
                                 <Route path="/" exact>
                                     <BuilderList />
                                 </Route>
+
                                 <Route path="/setup" exact>
                                     <Setup />
                                 </Route>
                                 <Route path="/building" exact>
                                     <Building />
+                                </Route>
+                                <Route path="/market" exact>
+                                    <BuilderMarket />
                                 </Route>
                             </Switch>
                         </Content>

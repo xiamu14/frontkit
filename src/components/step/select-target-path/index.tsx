@@ -11,6 +11,7 @@ interface Props {
     onSelected: (dir: Record<'targetPath', string>) => void;
     initialValue?: string
 }
+const channel = 'selectedTargetPath';
 
 export default function SelectTargetPath(props: Props) {
     const { initialValue } = props;
@@ -23,18 +24,18 @@ export default function SelectTargetPath(props: Props) {
     }, [initialValue])
 
     const handleSelectDirectory = () => {
-        ipcRenderer.send('open-directory-dialog', ['openDirectory']);
+        ipcRenderer.send('open-directory-dialog', [['openDirectory'], {channel}]);
     }
 
     useEffect(() => {
-        ipcRenderer.on('selected-directory', (_, directory: string[]) => {
+        ipcRenderer.on(channel, (_, directory: string[]) => {
             // TODO: 这里还缺少了错误处理
             if (directory && directory.length > 0) {
                 setPath(directory[0]);
                 props.onSelected({ targetPath: directory[0] });
             }
         })
-        return () => ipcRenderer.removeAllListeners('selected-directory')
+        return () => ipcRenderer.removeAllListeners(channel)
     }, [props])
 
     return (

@@ -7,32 +7,26 @@ module.exports = function event() {
     // 选择目录/文件
     ipcMain.on("open-directory-dialog", (event, arg) => {
         const directory = dialog.showOpenDialogSync({
-            properties: arg
+            properties: arg[0],
         });
-        event.reply("selected-directory", directory);
+        const { channel } = arg[1];
+        event.reply(channel, directory);
     });
 
     // 保存生成器配置
     ipcMain.on("save-builder", (event, arg) => {
         const conf = Object.assign({}, { id: shortid.generate() }, arg);
-        db.get("builderConf")
-            .push(conf)
-            .write();
+        db.get("builderConf").push(conf).write();
     });
     // 删除生成器配置
     ipcMain.on("del-builder", (event, arg) => {
-        db.get("builderConf")
-            .remove({ id: arg })
-            .write();
+        db.get("builderConf").remove({ id: arg }).write();
         const builder = db.get("builderConf").value();
         event.reply("read-builder", builder);
     });
     // 更新生成器配置
     ipcMain.on("update-builder", (event, arg) => {
-        db.get("builderConf")
-            .find({ id: arg.id })
-            .assign(arg.conf)
-            .write();
+        db.get("builderConf").find({ id: arg.id }).assign(arg.conf).write();
         const builder = db.get("builderConf").value();
         event.reply("read-builder", builder);
     });
@@ -40,10 +34,7 @@ module.exports = function event() {
     ipcMain.on("read-builder", (event, arg) => {
         let builder = [];
         if (arg) {
-            builder = db
-                .get("builderConf")
-                .find(arg)
-                .value();
+            builder = db.get("builderConf").find(arg).value();
         } else {
             builder = db.get("builderConf").value();
         }
