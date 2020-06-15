@@ -32,8 +32,10 @@
     "react-scripts": "3.4.0",
     "shortid": "^2.2.15",
     "swr": "^0.2.3",
-    "typescript": "^3.8.3",
-    "unfetch": "^4.1.0"
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5",
+    "unfetch": "^4.1.0",
+    "vm2": "^3.9.2"
   },
   "scripts": {
     "start": "react-app-rewired start",
