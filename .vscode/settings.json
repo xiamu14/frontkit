@@ -8,6 +8,7 @@
         "formily",
         "hoverable",
         "linaria",
+        "mutators",
         "promisify",
         "unfetch",
         "uniqueid"

@@ -87,7 +87,7 @@ const actions = createFormActions();
 
 interface Props {
     isClickNext: boolean
-    initialValue?:  Record<string, any>
+    initialValue?: Record<string, any>
     onInput: (status: boolean, fieldData?: Record<string, any>) => void;
 }
 
@@ -130,7 +130,7 @@ export default function SelectTemplate(props: Props) {
                 required={true}
             >
                 <Field type="object">
-                    <Field name="templateFilePath" x-component="SelectFile" title="模板文件" />
+                    <Field name="templateFilePath" x-component="SelectFile" x-props={{ channel: Date.now().toString() }} title="模板文件" />
 
                     <Field name="targetFileName" x-component="Input" title="生成文件" />
                 </Field>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { PageHeader, Button } from 'antd';
 import { useHistory } from 'react-router-dom';
+import { css } from '@redchili/toolkit';
 import { useQuery } from '../../hooks/use-query';
 import SelectTargetPath from '../step/select-target-path';
 import Process from './components/process';
@@ -56,6 +57,11 @@ export default function Building() {
         setConf({ ...conf, ...{ dataPath: dir.path } })
     }
 
+    const handleSkipSelectedDataPath = () => {
+        // NOTE: 设置 - ,标识跳过读取数据源(复制模式可以跳过)
+        setConf({ ...conf, ...{ dataPath: '-' } })
+    }
+
     return (
         <div>
             {conf ? <PageHeader
@@ -66,11 +72,22 @@ export default function Building() {
             {status === 'default' ? <div className='btn-init'>
                 {conf && conf.targetPath && conf.dataPath ? <Button type='primary' shape='round' onClick={handleClickStart}>开始</Button> : null}
                 {
-                    conf && !conf.dataPath ? <SelectPath onSelected={handleDataPathSelected} title="选择数据源目录" channel="selectedDataPath" /> :
+                    conf && !conf.dataPath ? (
+                        <div style={css`
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex-direction: column;
+                            margin-top: 40px;
+                        `}>
+                            <SelectPath onSelected={handleDataPathSelected} title="选择数据源目录" channel="selectedDataPath" />
+                            <Button type="primary" shape="round" onClick={handleSkipSelectedDataPath}>跳过</Button>
+                        </div>) :
                         conf && !conf.targetPath ? <SelectTargetPath onSelected={handleTargetPathSelected} /> : null
                 }
 
             </div> : <Process current={current} content={processLog} status={processStatus} />}
+
         </div>
     )
 }

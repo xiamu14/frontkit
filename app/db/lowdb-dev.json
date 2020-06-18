@@ -19,24 +19,44 @@
       }
     },
     {
-      "id": "WPV7gNpia",
+      "id": "LR1s1NJOd",
       "dataPath": "",
       "parse": {
-        "type": "json"
+        "type": "picture"
       },
       "templateList": [
         {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/template/ant-table-pro/index.js",
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/components/form.tsx.mc",
           "targetFileName": "index.tsx"
         },
         {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/__test__/template/ant-table-pro/api-list.js",
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/list(get).ts.mc",
+          "targetFileName": "components/form.tsx"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(add).ts.mc",
           "targetFileName": "apis/list(get).ts"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(update).ts.mc",
+          "targetFileName": "apis/item(add).ts"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(get).ts.mc",
+          "targetFileName": "apis/item(update).ts"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(del).ts.mc",
+          "targetFileName": "apis/item(get).ts"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(del).ts.mc",
+          "targetFileName": "apis/item(del).ts"
         }
       ],
       "info": {
-        "name": "ant table pro 组件生成器",
-        "desc": "复杂表格组件生成器"
+        "name": "ant-curd-table",
+        "desc": "基于 Antd Design UI 组件库生成 CURD 表格的模块文件"
       }
     }
   ],

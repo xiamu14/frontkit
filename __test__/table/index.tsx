@@ -2,8 +2,8 @@
     import React, { useRef, useState, useCallback } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
-import ProTable, { ProColumns, ActionType } from "@ant-design/pro-table";
-import { useChiliReq } from "chili-request";
+import ProTable, { ProColumns, ActionType } from "../../builder/ant-curd/node_modules/@ant-design/pro-table";
+import { useChiliReq } from "../../builder/ant-curd/node_modules/chili-request";
 import Matcher from "data-matcher";
 
 import { getList } from "./apis/list(get)";
