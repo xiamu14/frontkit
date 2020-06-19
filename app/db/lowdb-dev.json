@@ -19,44 +19,44 @@
       }
     },
     {
-      "id": "LR1s1NJOd",
+      "id": "PFagPbW8l",
       "dataPath": "",
       "parse": {
-        "type": "picture"
+        "type": "--"
       },
       "templateList": [
         {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/components/form.tsx.mc",
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/index.tsx.mc",
           "targetFileName": "index.tsx"
         },
         {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/list(get).ts.mc",
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/components/form.tsx.mc",
           "targetFileName": "components/form.tsx"
         },
         {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/list(get).ts.mc",
+          "targetFileName": "apis/list(get).tsx"
+        },
+        {
           "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(add).ts.mc",
-          "targetFileName": "apis/list(get).ts"
-        },
-        {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(update).ts.mc",
           "targetFileName": "apis/item(add).ts"
-        },
-        {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(get).ts.mc",
-          "targetFileName": "apis/item(update).ts"
-        },
-        {
-          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(del).ts.mc",
-          "targetFileName": "apis/item(get).ts"
         },
         {
           "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(del).ts.mc",
           "targetFileName": "apis/item(del).ts"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(update).ts.mc",
+          "targetFileName": "apis/item(update).ts"
+        },
+        {
+          "templateFilePath": "/Users/ben/Documents/w/code/myproject/magic-code/client/builder/ant-curd/apis/item(get).ts.mc",
+          "targetFileName": "apis/item(get).ts"
         }
       ],
       "info": {
-        "name": "ant-curd-table",
-        "desc": "基于 Antd Design UI 组件库生成 CURD 表格的模块文件"
+        "name": "antd-curd",
+        "desc": "基于 ant deisgn 生成 CURD 表格模块代码生成器"
       }
     }
   ],

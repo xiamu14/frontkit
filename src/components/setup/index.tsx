@@ -47,7 +47,11 @@ export default function Setup() {
 
     const handleOk = (res: Record<'info', any>) => {
         setVisible(false);
-        ipcRenderer.send('save-builder', { ...data, ...res });
+        if (id) {
+            ipcRenderer.send('update-builder', { id, ...{ conf: { ...data, ...res } } });
+        } else {
+            ipcRenderer.send('save-builder', { ...data, ...res });
+        }
 
         // NOTE: 这里还需要处理错误信息
         notification.open({
@@ -139,7 +143,7 @@ export default function Setup() {
                 onCancel={() => setVisible(false)}
                 footer={false}
             >
-                <InfoForm onOk={handleOk} />
+                <InfoForm onOk={handleOk} initialValues={initialValues.info} />
             </Modal>
         </div>
     )

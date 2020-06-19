@@ -1,4 +1,4 @@
-module.exports = async function pictureParser(files) {
+module.exports = async function jsonParser(files) {
     const data = [];
     return new Promise(async resolve => {
         try {

@@ -11,12 +11,13 @@ import { Input } from '@formily/antd-components'
 const actions = createFormActions();
 
 interface Props {
-    onOk: (data: Record<'info', any>) => void
+    onOk: (data: Record<'info', any>) => void,
+    initialValues?: Record<string, any>
 }
 
 export default function InfoForm(props: Props) {
 
-    const { onOk } = props;
+    const { onOk, initialValues } = props;
 
     const handleSubmit = (data: Record<'name' | 'desc', string>) => {
         onOk({ info: data });
@@ -27,6 +28,7 @@ export default function InfoForm(props: Props) {
             <SchemaForm
                 actions={actions}
                 onSubmit={handleSubmit}
+                initialValues={initialValues}
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 14 }}
                 components={{

@@ -1,36 +1,42 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import './index.scss';
+import { Tooltip } from 'antd';
+import { guid } from '../../../util/guid';
 // @ts-ignore
 const { ipcRenderer } = window;
 
 interface Props {
     value: string
     onChange: (value: string) => void
-    channel: string
+    channel?: string
     style?: React.CSSProperties
 }
 
 export default function SelectFile(props: Props) {
     const { value, onChange, style, channel } = props;
+    const uniqChannel = useMemo(() => channel ?? guid(), [channel]);
     const handleSelectFile = () => {
-        ipcRenderer.send('open-directory-dialog', [['openFile'], { 'channel': channel }]);
+        ipcRenderer.send('open-directory-dialog', [['openFile'], { 'channel': uniqChannel }]);
     }
 
     useEffect(() => {
-        ipcRenderer.on(channel, (_, directory: string[]) => {
+        
+        ipcRenderer.on(uniqChannel, (_, directory: string[]) => {
             if (directory && directory.length > 0) {
                 onChange(directory[0]);
             }
         })
-        return () => ipcRenderer.removeAllListeners(channel)
-    }, [onChange, channel])
+        return () => ipcRenderer.removeAllListeners(uniqChannel)
+    }, [onChange, uniqChannel])
 
     return (
-        <div
-            onClick={handleSelectFile}
-            className="ant-input select-virtual"
-            style={style}
-        >{value}</div>
+        <Tooltip title={value}>
+            <div
+                onClick={handleSelectFile}
+                className="ant-input select-virtual"
+                style={style}
+            >{value}</div>
+        </Tooltip>
     )
 
 }

@@ -53,6 +53,7 @@ export default function SelectParse(props: Props) {
                 <Field
                     type="string"
                     enum={[
+                        { label: "--", value: "--" },
                         { label: '图片解析器', value: 'picture' },
                         { label: "JSON 解析器", value: "json" },
                         { label: '自定义解析器', value: 'custom' }

@@ -4,7 +4,7 @@ import { Button, message } from 'antd'
 import { SchemaForm, SchemaField, SchemaMarkupField as Field, createFormActions, } from '@formily/antd'
 import { ArrayList } from '@formily/react-shared-components'
 import { toArr, FormPath } from '@formily/shared'
-import { Input } from '@formily/antd-components'
+import { Input, ArrayCards } from '@formily/antd-components'
 import SelectFile from '../../form-field/select-file';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -105,7 +105,6 @@ export default function SelectTemplate(props: Props) {
                 } else {
                     onInput(false);
                     message.error('请添加模板文件！');
-
                 }
             })
         }
@@ -116,7 +115,8 @@ export default function SelectTemplate(props: Props) {
             components={{
                 ArrayCustom,
                 Input,
-                SelectFile
+                SelectFile,
+                ArrayCards
             }}
             // initialValues={initialValue}
             actions={actions}
@@ -130,7 +130,7 @@ export default function SelectTemplate(props: Props) {
                 required={true}
             >
                 <Field type="object">
-                    <Field name="templateFilePath" x-component="SelectFile" x-props={{ channel: Date.now().toString() }} title="模板文件" />
+                    <Field name="templateFilePath" x-component="SelectFile" title="模板文件" />
 
                     <Field name="targetFileName" x-component="Input" title="生成文件" />
                 </Field>
