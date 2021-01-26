@@ -1,5 +1,4 @@
 module.exports = function indexTpl(data) {
-
     const tpl = `import React from "react";
 import {Icons} from "./type";
 import "./index.css";
@@ -20,6 +19,5 @@ export default function IconPro(props: Icon) {
   return <span style={style} className={\`icon $\{props.type} $\{className || ''}\`} />;
 }`;
 
-return tpl;
-
+    return tpl;
 };

@@ -1,11 +1,11 @@
 {
-  "name": "magic-code",
+  "name": "frontkit",
   "version": "0.1.0",
   "private": true,
   "main": "electron.js",
   "homepage": "./",
-  "repository": "http://gitea.ohcat.xyz/utooo/magic-code.git",
-  "description": "前端代码生成器",
+  "repository": "https://github.com/xiamu14/frontkit.git",
+  "description": "前端工具箱",
   "dependencies": {
     "@formily/antd": "^1.0.9",
     "@formily/antd-components": "^1.0.9",
@@ -34,7 +34,7 @@
     "build": "react-app-rewired build && node ./tasks/prepack.js",
     "test": "react-app-rewired test",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
-    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && ELECTRON_IS_DEV=1 electron .\"",
+    "dev": "concurrently \"BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && ELECTRON_IS_DEV=1 electron .\"",
     "pack:dmg": "yarn build && electron-builder -m dmg"
   },
   "author": {
@@ -43,8 +43,8 @@
     "url": "https://website.com"
   },
   "build": {
-    "appId": "com.magic-code.app",
-    "productName": "magic-code",
+    "appId": "com.frontkit.app",
+    "productName": "frontkit",
     "copyright": "Copyright © 2019 ${author}",
     "mac": {
       "icon": "app/assets/icon.icns",
